@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users List</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="admin">
+    <nav>
+         <a class="logo" href="index.html"><img src="./Image/logo.png" alt="Restaurant Logo"></a>
+        <a href="users.html" class="active">Users List</a>
+        <a href="orders.html">All Orders</a>
+        <a href="sales.html">Sales Report</a>
+        <a href="food.html">Add/Edit Food</a>
+        <a href="../login.html">Logout</a>
+    </nav>
+
+    <form method="get" class="card">
+      <fieldset>
+            <legend>Users List</legend>
+            <table class="form-table">
+            <tr>
+                <td><label for="search_by">Search By:</label></td>
+            <td>
+            <select id="search_by" name="search_by">
+            <option>Select an Option</option>
+            <option>Name</option>
+            <option>Email</option>
+            <option>Phone</option>
+            </select>
+          </td>
+       </tr>
+      <tr>
+            <td><label for="search_text">Search Text:</label></td>
+             <td><input type="text" id="search_text" name="search_text" required></td>
+            </tr>
+            <tr>
+            <td colspan="2" class="btn-row">
+                 <input type="submit" value="Search">
+                <input type="reset">
+             </td>
+         </tr>
+     </table>
+      </fieldset>
+    </form>
+
+    <table class="data-table card">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+        </tr>
+        <tr>
+            <td>Mortaza</td>
+            <td>golammortaza@gmail.com</td>
+            <td>01795770761</td>
+            <td>Uttara, Dhaka</td>
+        </tr>
+        <tr>
+            <td>Salma</td>
+            <td>salma@mail.com</td>
+            <td>01733333333</td>
+            <td>Mirpur, Dhaka</td>
+        </tr>
+        <tr>
+            <td>Arif</td>
+            <td>arifmd@gmail.com</td>
+            <td>01908887812</td>
+            <td>Kuril, Dhaka</td>
+        </tr>
+        <tr>
+            <td>Akib</td>
+            <td>mdakib@gmail.com</td>
+            <td>01626178312</td>
+            <td>Kuril, Dhaka</td>
+        </tr>
+    </table>
+     <table class="footer">
+        <tr>
+            <td>&copy; 2026 Restaurant Management System</td>
+        </tr>
+    </table>
+</body>
+</html>
