@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Report</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="admin">
+    <nav>
+        <a class="logo" href="index.html"><img src="./Image/logo.png" alt="Restaurant Logo"></a>
+        <a href="users.html">Users List</a>
+        <a href="orders.html">All Orders</a>
+        <a href="sales.html" class="active">Sales Report</a>
+        <a href="food.html">Add/Edit Food</a>
+        <a href="../login.html">Logout</a>
+    </nav>
+
+    <form method="get" class="card">
+        <fieldset>
+            <legend>Sales Report</legend>
+            <table class="form-table">
+                <tr>
+                    <td><label for="report_type">Report Type:</label></td>
+                    <td>
+                        <select id="report_type" name="report_type">
+                            <option>Select a Type</option>
+                            <option>Daily</option>
+                            <option>Monthly</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="from_date">From Date:</label></td>
+                    <td><input type="date" id="from_date" name="from_date" required></td>
+                </tr>
+                <tr>
+                    <td><label for="to_date">To Date:</label></td>
+                    <td><input type="date" id="to_date" name="to_date" required></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="btn-row">
+                        <input type="submit" value="Show Report">
+                        <input type="reset">
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </form>
+
+    <table class="summary-table card">
+        <tr>
+            <th>Total Sales:</th>
+            <td>1000 Taka</td>
+        </tr>
+        <tr>
+            <th>Total Orders:</th>
+            <td>4</td>
+        </tr>
+        <tr>
+            <th>Best Seller:</th>
+            <td>Pizza</td>
+        </tr>
+    </table>
+    <table class="data-table card">
+        <tr>
+            <th>Food</th>
+            <th>Sold</th>
+            <th>Revenue</th>
+        </tr>
+        <tr>
+            <td>Burger</td>
+            <td>5</td>
+            <td>350</td>
+        </tr>
+        <tr>
+            <td>Pizza</td>
+            <td>4</td>
+            <td>450</td>
+        </tr>
+        <tr>
+            <td>Pasta</td>
+            <td>3</td>
+            <td>250</td>
+        </tr>
+        <tr>
+            <td>Soft Drinks</td>
+            <td>4</td>
+            <td>120</td>
+        </tr>
+    </table>
+     <table class="footer">
+        <tr>
+            <td>&copy; 2026 Restaurant Management System</td>
+        </tr>
+    </table>
+</body>
+</html>
