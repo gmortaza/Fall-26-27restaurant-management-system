@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add/Edit Food</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="admin">
+   <nav>
+    <a class="logo" href="index.html"><img src="./Image/logo.png" alt="Restaurant Logo"></a>
+    <a href="users.html">Users List</a>
+    <a href="orders.html">All Orders</a>
+    <a href="sales.html">Sales Report</a>
+    <a href="food.html" class="active">Add/Edit Food</a>
+    <a href="../login.html" class="logout">Logout</a>
+</nav>
+
+    <form method="get" class="card">
+    <fieldset>
+        <legend>Add / Edit Food</legend>
+        <table class="form-table">
+         <tr>
+            <td><label for="food_name">Food Name:</label></td>
+            <td><input type="text" id="food_name" name="food_name" required></td>
+         </tr>
+         <tr>
+            <td><label for="category">Category:</label></td>
+                <td>
+          <select id="category" name="category">
+            <option>Select a Category</option>
+            <option>Fast Food</option>
+            <option>Rice</option>
+            <option>Drinks</option>
+            </select>
+            </td>
+         </tr>
+            <tr>
+                <td><label for="price">Price:</label></td>
+                <td><input type="number" id="price" name="price" required></td>
+          </tr>
+             <tr>
+                <td><label for="stock">Stock:</label></td>
+                <td><input type="number" id="stock" name="stock" required></td>
+          </tr>
+              <tr>
+                <td>Available:</td>
+                 <td>
+                 <input type="radio" id="yes" name="available" value="yes" checked>
+                 <label for="yes">Available</label>
+                 <input type="radio" id="no" name="available" value="no">
+                 <label for="no">Out of stock</label>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" class="btn-row">
+                     <input type="submit" value="Save Food">
+                    <input type="reset">
+                 </td>
+                </tr>
+            </table>
+    </fieldset>
+    </form>
+    <table class="data-table card">
+        <tr>
+            <th>Food</th>
+            <th>Price</th>
+            <th>Stock</th>
+        </tr>
+        <tr>
+          <td>Burger</td>
+          <td>350</td>
+          <td>20</td>
+        </tr>
+        <tr>
+          <td>Pizza</td>
+          <td>450</td>
+          <td>15</td>
+        </tr>
+        <tr>
+          <td>Pasta</td>
+          <td>350</td>
+          <td>10</td>
+        </tr>
+       <tr>
+           <td>Soft Drinks</td>
+           <td>120</td>
+           <td>5</td>
+        </tr>
+    </table>
+     <table class="footer">
+        <tr>
+            <td>&copy; 2026 Restaurant Management System</td>
+        </tr>
+    </table>
+</body>
+</html>
