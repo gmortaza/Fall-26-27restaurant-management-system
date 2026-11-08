@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Restaurant Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login">
+      <nav>
+       <a class="logo" href="index.html"><img src="./Image/logo.png" alt="Restaurant Logo"></a>
+        <a href="index.html#home">Home</a>
+        <a href="index.html#about">About</a> 
+        <a href="index.html#menu">Menu</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#contact">Contact</a>
+    </nav>
+   <form id="login" action="index.html" method="get" onsubmit="return validateLogin()">
+    <h2>Restaurant Management System</h2>
+    <table>
+    <tr>
+        <td><label for="email">Email:</label></td>
+        <td><input type="email" id="email" name="email" required></td>
+    </tr>
+       <tr>
+           <td><label for="password">Password:</label></td>
+            <td><input type="password" id="password" name="password" required></td>
+        </tr>
+    <tr>
+           <td><label for="user_type">User Type:</label></td>
+    <td>
+          <select id="user_type" name="user_type" required>
+          <option value="">Select User Type</option>
+          <option value="Admin">Admin</option>
+          <option value="Customer">Customer</option>
+          <option value="chefs">Chefs</option>
+          <option value="Delivery Man">Delivery Man</option>
+        </select>
+     </td>
+        </tr>
+     <tr>
+        <td></td>
+    <td>
+         <input type="submit" value="Login">
+         <input type="reset">
+    </td>
+            </tr>
+        </table>
+       <p>
+    <button type="button" class="use-btn" onclick="showForm('forgot')">Forgot Password?</button>
+    <button type="button" class="use-btn" onclick="showForm('signup')">Create New Account</button>
+</p>
+    </form>
+    <form id="signup" action="login.html#login" method="post" onsubmit="return validateSignup()" oninput="checkSignup()" onreset="setTimeout(checkSignup, 0)">
+        <h2>Restaurant Management System</h2>
+        <h3>Create New Account</h3>
+    <table>
+    <tr>
+        <td><label for="full_name">Full Name:</label></td>
+        <td><input type="text" id="full_name" name="full_name" required></td>
+    </tr>
+    <tr>
+        <td><label for="new_email">Email:</label></td>
+        <td><input type="email" id="new_email" name="email" required></td>
+    </tr>
+    <tr>
+        <td><label for="new_password">Password:</label></td>
+        <td><input type="password" id="new_password" name="password" required></td>
+    </tr>
+    <tr>
+        <td><label for="phone">Phone:</label></td>
+        <td><input type="tel" id="phone" name="phone" required></td>
+    </tr>
+    <tr>
+        <td>
+    </td>
+        <td>
+            <input type="submit" id="register" value="Create Account" disabled>
+            <input type="reset">
+        </td>
+        </tr>
+    </table>
+      <button type="button" class="use-btn" onclick="showForm('login')">Login</button>
+    </form>
+    <form id="forgot" action="login.html#login" method="get" onsubmit="return validateForgot()">
+        <h2>Restaurant Management System</h2>
+        <h3>Forgot Password</h3>
+    <table>
+    <tr>
+        <td><label for="forgot_email">Email:</label></td>
+        <td><input type="email" id="forgot_email" name="email" required></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" value="Send Reset Link"></td>
+    </tr>
+     </table>
+        <p><button type="button" class="use-btn" onclick="showForm('login')">Back to Login</button></p>
+    </form>
+    <form id="credentials">
+        <h3>Demo Accounts</h3>   
+    <table>
+    <tr>
+        <th>User Type</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th></th>
+        </tr>
+    <tr>
+        <td>Admin</td>
+        <td>admin@restaurant.com</td>
+        <td>admin1234</td>
+      <td><button type="button" class="use-btn" data-type="Admin" data-email="admin@restaurant.com" data-password="admin1234" onclick="fillDemo(this)">Use</button></td>
+    </tr>
+
+     <tr>
+        <td>Customer</td>
+        <td>customer@restaurant.com</td>
+        <td>customer123</td>
+    <td><button type="button" class="use-btn" data-type="Customer" data-email="customer@restaurant.com" data-password="customer123" onclick="fillDemo(this)">Use</button></td>
+    </tr>
+
+    <tr>
+        <td>Chefs</td>
+        <td>chef@restaurant.com</td>
+        <td>chef123</td>
+        <td><button type="button" class="use-btn" data-type="chefs" data-email="chef@restaurant.com" data-password="chef123" onclick="fillDemo(this)">Use</button></td>
+    </tr>
+        <tr>
+            <td>Delivery Man</td>
+            <td>delivery@restaurant.com</td>
+            <td>delivery123</td>
+            <td><button type="button" class="use-btn" data-type="Delivery Man" data-email="delivery@restaurant.com" data-password="delivery123" onclick="fillDemo(this)">Use</button></td>
+        </tr>
+    </table>
+    </form>   
+    <script src="Js/login.js"></script>
+</body>
+</html>
