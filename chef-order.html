@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chef Orders</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="chef">
+    <nav>
+        <a class="logo" href="index.html"><img src="./Image/logo.png" alt="Restaurant Logo"></a>
+        <a href="chef_dashboard.html">Dashboard</a>
+        <a href="chef_orders.html" class="active">Order Queue</a>
+        <a href="chef_stock.html">Food Stock</a>
+        <a href="../login.html" class="logout">Logout</a>
+    </nav>
+
+    <form method="get" class="card">
+        <fieldset>
+            <legend>Order Queue</legend>
+            <table class="form-table">
+                <tr>
+                    <td><label for="status">Order Status:</label></td>
+                    <td>
+                        <select id="status" name="status">
+                            <option>Select a Status</option>
+                            <option>Pending</option>
+                            <option>Preparing</option>
+                            <option>Ready</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="order_date">Order Date:</label></td>
+                    <td><input type="date" id="order_date" name="order_date"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="btn-row">
+                        <input type="submit" value="Filter">
+                        <input type="reset">
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </form>
+
+    <table class="data-table card">
+        <tr>
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Food</th>
+            <th>Quantity</th>
+            <th>Status</th>
+            <th>Update Status</th>
+        </tr>
+        <tr>
+            <td>101</td>
+            <td>Akib</td>
+            <td>Burger</td>
+            <td>3</td>
+            <td>Pending</td>
+            <td>
+                <form method="get">
+                    <input type="hidden" name="order_id" value="101">
+                    <select name="new_status">
+                        <option>Pending</option>
+                        <option>Preparing</option>
+                        <option>Ready</option>
+                    </select>
+                    <input type="submit" value="Update">
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>103</td>
+            <td>Salma</td>
+            <td>Pasta</td>
+            <td>2</td>
+            <td>Preparing</td>
+            <td>
+                <form method="get">
+                    <input type="hidden" name="order_id" value="103">
+                    <select name="new_status">
+                        <option>Pending</option>
+                        <option selected>Preparing</option>
+                        <option>Ready</option>
+                    </select>
+                    <input type="submit" value="Update">
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>104</td>
+            <td>Mortaza</td>
+            <td>Soft Drinks</td>
+            <td>2</td>
+            <td>Ready</td>
+            <td>
+                <form method="get">
+                    <input type="hidden" name="order_id" value="104">
+                    <select name="new_status">
+                        <option>Pending</option>
+                        <option>Preparing</option>
+                        <option selected>Ready</option>
+                    </select>
+                    <input type="submit" value="Update">
+                </form>
+            </td>
+        </tr>
+    </table>
+
+    <table class="footer">
+        <tr>
+            <td>2026 Restaurant Management System</td>
+        </tr>
+    </table>
+</body>
+
+</html>
