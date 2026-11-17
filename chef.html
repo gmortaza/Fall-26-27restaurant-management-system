@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chef Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+
+
+
+
+<body class="chef">
+
+    <nav>
+        <a class="logo" href="index.html"><img src="./Image/logo.png" alt="Restaurant Logo"></a>
+        <a href="chef_dashboard.html" class="active">Dashboard</a>
+        <a href="#orders">Order Queue</a>
+        <a href="#stock">Food Stock</a>
+        <a href="../login.html" class="logout">Logout</a>
+    </nav>
+
+
+    <h2>Welcome, Chef</h2>
+
+    <table class="summary-table card">
+        
+        <tr>
+            <th>Pending Orders:</th>
+            <td>1</td>
+        
+        </tr>
+     
+     
+     
+        <tr>
+            <th>Preparing Orders:</th>
+            <td>1</td>
+        </tr>
+
+
+
+        <tr>
+
+            <th>Ready Orders:</th>
+            <td>1</td>
+
+        </tr>
+
+
+
+
+
+    </table>
+
+
+
+    <form method="get" class="card">
+      
+        <fieldset>
+          
+            <legend>Filter Orders</legend>
+           
+            <table class="form-table">
+              
+                <tr>
+                   
+                    <td><label for="status">Order Status:</label></td>
+                  
+                    <td>
+                      
+                        <select id="status" name="status">
+                            <option>Select a Status</option>
+                            <option>Pending</option>
+                            <option>Preparing</option>
+                            <option>Ready</option>
+                        </select>
+
+
+
+                    </td>
+                </tr>
+
+
+
+                <tr>
+
+                    <td><label for="order_date">Order Date:</label></td>
+                    <td><input type="date" id="order_date" name="order_date"></td>
+                </tr>
+
+
+
+
+                <tr>
+
+                    <td colspan="2" class="btn-row">
+                        <input type="submit" value="Filter">
+                        <input type="reset">
+                    </td>
+
+
+
+
+                </tr>
+
+            </table>
+
+
+
+
+        </fieldset>
+
+    </form>
+
+    <table class="data-table card" id="orders">
+        <caption>Order Queue</caption>
+
+
+
+
+        <tr>
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Food</th>
+            <th>Quantity</th>
+            <th>Status</th>
+            <th>Update Status</th>
+        </tr>
+
+
+
+
+
+        <tr>
+            <td>101</td>
+            <td>Akib</td>
+            <td>Burger</td>
+            <td>3</td>
+            <td>Pending</td>
+
+            <td>
+
+
+                <form method="get">
+                    <input type="hidden" name="order_id" value="101">
+                    <select name="new_status">
+                        <option>Pending</option>
+                        <option>Preparing</option>
+                        <option>Ready</option>
+                    </select>
+                    <input type="submit" value="Update">
+                </form>
+            </td>
+        </tr>
+
+
+
+
+
+        <tr>
+            <td>103</td>
+            <td>Salma</td>
+            <td>Pasta</td>
+            <td>2</td>
+            <td>Preparing</td>
+            <td>
+
+
+                <form method="get">
+                    <input type="hidden" name="order_id" value="103">
+                    <select name="new_status">
+                        <option>Pending</option>
+                        <option selected>Preparing</option>
+                        <option>Ready</option>
+                    </select>
+                    <input type="submit" value="Update">
+                </form>
+           
+           
+           
+            </td>
+        </tr>
+        <tr>
+            <td>104</td>
+            <td>Mortaza</td>
+            <td>Soft Drinks</td>
+            <td>2</td>
+            <td>Ready</td>
+            <td>
+
+
+
+
+
+                <form method="get">
+                    <input type="hidden" name="order_id" value="104">
+                    <select name="new_status">
+                        <option>Pending</option>
+                        <option>Preparing</option>
+                        <option selected>Ready</option>
+                    </select>
+                    <input type="submit" value="Update">
+                
+                
+                </form>
+
+
+
+            </td>
+        </tr>
+  
+  
+  
+  
+  
+    </table>
+
+    <table class="data-table card" id="stock">
+        <caption>Food Stock</caption>
+       
+       
+       
+       
+        <tr>
+            <th>Food</th>
+            <th>Stock</th>
+            <th>Availability</th>
+            <th>Update</th>
+        </tr>
+       
+       
+       
+       
+        <tr>
+            <td>Burger</td>
+            <td>20</td>
+            <td>Available</td>
+            <td>
+
+
+
+
+
+                <form method="get">
+
+                    <input type="hidden" name="food" value="Burger">
+                    <input type="radio" id="burger_yes" name="available" value="yes" checked>
+                    <label for="burger_yes">Available</label>
+                    <input type="radio" id="burger_no" name="available" value="no">
+                    <label for="burger_no">Out of stock</label>
+                    <input type="submit" value="Save">
+               
+               
+                </form>
+
+
+
+
+
+            </td>
+        </tr>
+        <tr>
+            <td>Pizza</td>
+            <td>15</td>
+            <td>Available</td>
+            <td>
+
+
+
+
+                <form method="get">
+                    <input type="hidden" name="food" value="Pizza">
+                    <input type="radio" id="pizza_yes" name="available" value="yes" checked>
+                    <label for="pizza_yes">Available</label>
+                    <input type="radio" id="pizza_no" name="available" value="no">
+                    <label for="pizza_no">Out of stock</label>
+                    <input type="submit" value="Save">
+               
+                </form>
+
+
+
+            </td>
+        </tr>
+      
+      
+      
+      
+        <tr>
+            <td>Pasta</td>
+            <td>10</td>
+            <td>Available</td>
+            <td>
+
+
+
+                <form method="get">
+                    <input type="hidden" name="food" value="Pasta">
+                    <input type="radio" id="pasta_yes" name="available" value="yes" checked>
+                    <label for="pasta_yes">Available</label>
+                    <input type="radio" id="pasta_no" name="available" value="no">
+                    <label for="pasta_no">Out of stock</label>
+                    <input type="submit" value="Save">
+             
+             
+             
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>Soft Drinks</td>
+            <td>5</td>
+            <td>Available</td>
+            <td>
+
+
+
+                <form method="get">
+                    <input type="hidden" name="food" value="Soft Drinks">
+                    <input type="radio" id="drinks_yes" name="available" value="yes" checked>
+                    <label for="drinks_yes">Available</label>
+                    <input type="radio" id="drinks_no" name="available" value="no">
+                    <label for="drinks_no">Out of stock</label>
+                    <input type="submit" value="Save">
+                
+                
+                
+                </form>
+            </td>
+        </tr>
+    </table>
+
+
+
+    <table class="footer">
+        <tr>
+            <td> 2026 Restaurant Management System</td>
+        </tr>
+    </table>
+</body>
+</html>
