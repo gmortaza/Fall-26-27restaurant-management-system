@@ -24,7 +24,6 @@ function clearErrors(ids) {
     }
   }
 }
-
 function showFoods() {
   let rows = "<tr><th>Food</th><th>Price</th><th>Stock</th></tr>";
   for (let i = 0; i < foods.length; i++) {
@@ -33,7 +32,6 @@ function showFoods() {
   document.getElementById("food_table").innerHTML = rows;
 }
 
-// Add a new food, or edit it if the name already exists
 function saveFood() {
   let name = document.getElementById("food_name").value.trim();
   let category = document.getElementById("category").value;
