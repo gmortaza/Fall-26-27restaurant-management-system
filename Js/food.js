@@ -24,7 +24,6 @@ function clearErrors(ids) {
     }
   }
 }
-
 function showFoods() {
   let rows = "<tr><th>Food</th><th>Price</th><th>Stock</th></tr>";
   for (let i = 0; i < foods.length; i++) {
