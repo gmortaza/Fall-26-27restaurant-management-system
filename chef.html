@@ -1,5 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
+
+
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chef Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+
+
+
+
+<body class="chef">
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +28,7 @@
     <link rel="stylesheet" href="../css/chef.css">
 </head>
 <body class="chef">
+ main
     <nav>
         <a class="logo" href="index.html"><img src="./Image/logo.png" alt="Restaurant Logo"></a>
         <a href="chef_dashboard.html" class="active">Dashboard</a>
@@ -15,6 +37,21 @@
         <a href="../login.html" class="logout">Logout</a>
     </nav>
 
+
+
+    <h2>Welcome, Chef</h2>
+
+    <table class="summary-table card">
+        
+        <tr>
+            <th>Pending Orders:</th>
+            <td>1</td>
+        
+        </tr>
+     
+     
+     
+
     <h2>Welcome, Chef</h2>
 
     <table class="summary-table card">
@@ -22,10 +59,45 @@
             <th>Pending Orders:</th>
             <td>1</td>
         </tr>
+ main
         <tr>
             <th>Preparing Orders:</th>
             <td>1</td>
         </tr>
+
+
+
+
+        <tr>
+
+            <th>Ready Orders:</th>
+            <td>1</td>
+
+        </tr>
+
+
+
+
+
+    </table>
+
+
+
+    <form method="get" class="card">
+      
+        <fieldset>
+          
+            <legend>Filter Orders</legend>
+           
+            <table class="form-table">
+              
+                <tr>
+                   
+                    <td><label for="status">Order Status:</label></td>
+                  
+                    <td>
+                      
+
         <tr>
             <th>Ready Orders:</th>
             <td>1</td>
@@ -39,12 +111,34 @@
                 <tr>
                     <td><label for="status">Order Status:</label></td>
                     <td>
+ main
                         <select id="status" name="status">
                             <option>Select a Status</option>
                             <option>Pending</option>
                             <option>Preparing</option>
                             <option>Ready</option>
                         </select>
+
+
+
+
+                    </td>
+                </tr>
+
+
+
+                <tr>
+
+                    <td><label for="order_date">Order Date:</label></td>
+                    <td><input type="date" id="order_date" name="order_date"></td>
+                </tr>
+
+
+
+
+                <tr>
+
+
                     </td>
                 </tr>
                 <tr>
@@ -52,17 +146,39 @@
                     <td><input type="date" id="order_date" name="order_date"></td>
                 </tr>
                 <tr>
+ main
                     <td colspan="2" class="btn-row">
                         <input type="submit" value="Filter">
                         <input type="reset">
                     </td>
+
+
+
+
+
+                </tr>
+
+            </table>
+
+
+
+
+        </fieldset>
+
+
                 </tr>
             </table>
         </fieldset>
+ main
     </form>
 
     <table class="data-table card" id="orders">
         <caption>Order Queue</caption>
+
+
+
+
+ main
         <tr>
             <th>ID</th>
             <th>Customer</th>
@@ -71,13 +187,28 @@
             <th>Status</th>
             <th>Update Status</th>
         </tr>
+
+
+
+
+
+
+
+ main
         <tr>
             <td>101</td>
             <td>Akib</td>
             <td>Burger</td>
             <td>3</td>
             <td>Pending</td>
+
+
             <td>
+
+
+
+            <td>
+ main
                 <form method="get">
                     <input type="hidden" name="order_id" value="101">
                     <select name="new_status">
@@ -89,6 +220,13 @@
                 </form>
             </td>
         </tr>
+
+
+
+
+
+
+ main
         <tr>
             <td>103</td>
             <td>Salma</td>
@@ -96,6 +234,11 @@
             <td>2</td>
             <td>Preparing</td>
             <td>
+
+
+
+
+ main
                 <form method="get">
                     <input type="hidden" name="order_id" value="103">
                     <select name="new_status">
@@ -105,6 +248,12 @@
                     </select>
                     <input type="submit" value="Update">
                 </form>
+
+           
+           
+           
+
+ main
             </td>
         </tr>
         <tr>
@@ -114,6 +263,14 @@
             <td>2</td>
             <td>Ready</td>
             <td>
+
+
+
+
+
+
+
+ main
                 <form method="get">
                     <input type="hidden" name="order_id" value="104">
                     <select name="new_status">
@@ -122,32 +279,78 @@
                         <option selected>Ready</option>
                     </select>
                     <input type="submit" value="Update">
+
+                
+                
+                </form>
+
+
+
+            </td>
+        </tr>
+  
+  
+  
+  
+  
+
                 </form>
             </td>
         </tr>
+ main
     </table>
 
     <table class="data-table card" id="stock">
         <caption>Food Stock</caption>
+
+       
+       
+       
+       
+
+ main
         <tr>
             <th>Food</th>
             <th>Stock</th>
             <th>Availability</th>
             <th>Update</th>
         </tr>
+     
+       
+       
+       
+ main
         <tr>
             <td>Burger</td>
             <td>20</td>
             <td>Available</td>
             <td>
+
+
+
                 <form method="get">
+
+
+                <form method="get">
+main
                     <input type="hidden" name="food" value="Burger">
                     <input type="radio" id="burger_yes" name="available" value="yes" checked>
                     <label for="burger_yes">Available</label>
                     <input type="radio" id="burger_no" name="available" value="no">
                     <label for="burger_no">Out of stock</label>
                     <input type="submit" value="Save">
+
+               
+               
                 </form>
+
+
+
+
+
+
+                </form>
+ main
             </td>
         </tr>
         <tr>
@@ -155,6 +358,10 @@
             <td>15</td>
             <td>Available</td>
             <td>
+
+
+
+ main
                 <form method="get">
                     <input type="hidden" name="food" value="Pizza">
                     <input type="radio" id="pizza_yes" name="available" value="yes" checked>
@@ -162,14 +369,32 @@
                     <input type="radio" id="pizza_no" name="available" value="no">
                     <label for="pizza_no">Out of stock</label>
                     <input type="submit" value="Save">
+
+               
+                </form>
+
+
+
+            </td>
+        </tr>
+      
+      
+      
+      
                 </form>
             </td>
         </tr>
+ main
         <tr>
             <td>Pasta</td>
             <td>10</td>
             <td>Available</td>
             <td>
+
+
+
+
+ main
                 <form method="get">
                     <input type="hidden" name="food" value="Pasta">
                     <input type="radio" id="pasta_yes" name="available" value="yes" checked>
@@ -177,6 +402,10 @@
                     <input type="radio" id="pasta_no" name="available" value="no">
                     <label for="pasta_no">Out of stock</label>
                     <input type="submit" value="Save">
+             
+             
+             
+ main
                 </form>
             </td>
         </tr>
@@ -185,6 +414,11 @@
             <td>5</td>
             <td>Available</td>
             <td>
+
+
+
+
+main
                 <form method="get">
                     <input type="hidden" name="food" value="Soft Drinks">
                     <input type="radio" id="drinks_yes" name="available" value="yes" checked>
@@ -192,14 +426,28 @@
                     <input type="radio" id="drinks_no" name="available" value="no">
                     <label for="drinks_no">Out of stock</label>
                     <input type="submit" value="Save">
+
+                
+                
+                
+
+ main
                 </form>
             </td>
         </tr>
     </table>
 
+
+
+
+    <table class="footer">
+        <tr>
+            <td> 2026 Restaurant Management System</td>
+
     <table class="footer">
         <tr>
             <td>&copy; 2026 Restaurant Management System</td>
+ main
         </tr>
     </table>
 </body>
