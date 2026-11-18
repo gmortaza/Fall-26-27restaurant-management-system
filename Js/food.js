@@ -33,7 +33,6 @@ function showFoods() {
   document.getElementById("food_table").innerHTML = rows;
 }
 
-// Add a new food, or edit it if the name already exists
 function saveFood() {
   let name = document.getElementById("food_name").value.trim();
   let category = document.getElementById("category").value;
