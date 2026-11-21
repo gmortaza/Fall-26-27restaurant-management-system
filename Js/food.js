@@ -92,3 +92,10 @@ function saveFood() {
 window.addEventListener("load", function () {
   showFoods();
 });
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> 8664a15 (23-53445-3 home page update)

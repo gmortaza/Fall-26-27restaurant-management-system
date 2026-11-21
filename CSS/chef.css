@@ -1,29 +1,39 @@
 /* chef.css - basic style for chef pages only */
 
 body.chef {
+
     margin: 0;
     font-family: Arial, sans-serif;
     background: #f3e3c3;
+
 }
 
 .chef h2 {
+
     text-align: center;
     color: #123A63;
+
 }
 
 .chef nav {
+
     background: #0e366d;
     padding: 16px 20px;
+
 }
+
 .chef nav a {
+
     color: white;
     text-decoration: none;
     padding: 10px 15px;
 }
+
 .chef nav a:hover,
 .chef nav a.active {
     color: #f5a523;
 }
+
 .chef nav a.logo img {
     height: 55px;
 }
@@ -39,9 +49,11 @@ body.chef {
 .chef table {
     margin: 0 auto;
 }
+
 .chef td {
-    padding: 8px;
+    padding: 10px;
 }
+
 .chef th {
     background: #123A63;
     color: white;
@@ -51,6 +63,7 @@ body.chef {
 .chef fieldset {
     border: none;
 }
+
 .chef legend {
     font-size: 20px;
     color: #123A63;
@@ -60,6 +73,7 @@ body.chef {
 .chef select {
     padding: 8px;
 }
+
 .chef .btn-row {
     text-align: center;
 }
