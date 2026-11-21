@@ -8,7 +8,7 @@ let restaurantRules = {
     maxQty: 20
 };
 
-// ---------- Menu (image files are inside the Image folder) ----------
+
 let menuItems = [
     { id: "M-001", name: "Margherita Pizza", price: 350, category: "Pizza", image: "pizza.png", description: "Tomato sauce, mozzarella and fresh basil" },
     { id: "M-002", name: "Pepperoni Pizza", price: 450, category: "Pizza", image: "pizza.png", description: "Spicy pepperoni with extra cheese" },
@@ -19,24 +19,19 @@ let menuItems = [
     { id: "M-007", name: "Soft Drinks", price: 50, category: "Drinks", image: "drinks.png", description: "Chilled soft drink (250 ml)" }
 ];
 
-// ---------- Orders ----------
+
 let orders = [
-    // Sample orders for testing Order Tracking (delete them when you do not need them):
+
     { id: "O-001", customerId: "U-003", itemId: "M-001", itemName: "Margherita Pizza", qty: 1, type: "Delivery", address: "House 12, Road 5, Bashundhara R/A, Dhaka", phone: "01841464801", payment: "bKash", note: "", total: 398, date: "2026-11-17", status: "Delivered" },
     { id: "O-002", customerId: "U-003", itemId: "M-003", itemName: "Alfredo Pasta", qty: 2, type: "Pickup", address: "-", phone: "01841464801", payment: "Cash", note: "", total: 588, date: "2026-11-18", status: "Preparing" }
 ];
 
-// ---------- Table reservations ----------
+
 let reservations = [
 
 ];
 
-// =====================================================
-// PART 2: COMMON HELPER FUNCTIONS
-// =====================================================
 
-// ---------- Sections ----------
-// Shows one section (class="section") and hides the others
 function showSection(id) {
     const sections = document.getElementsByClassName("section");
     for (let i = 0; i < sections.length; i++) {
@@ -45,7 +40,7 @@ function showSection(id) {
     document.getElementById(id).style.display = "block";
 }
 
-// ---------- Messages and errors ----------
+
 function showError(id, message) {
     const element = document.getElementById(id);
     element.innerHTML = message;
@@ -68,19 +63,17 @@ function showMessage(id, message, color) {
     element.style.color = color;
 }
 
-// ---------- Search and arrays ----------
-// true when the text contains the search text (not case sensitive)
+
 function containsText(text, search) {
     return text.toLowerCase().indexOf(search.toLowerCase()) !== -1;
 }
 
-// returns a NEW array without the item at the given index
+
 function removeAt(array, index) {
     return array.slice(0, index).concat(array.slice(index + 1));
 }
 
-// ---------- Validation ----------
-// Bangladesh mobile number: 11 digits, starts with 01
+
 function isValidPhone(phone) {
     if (phone.length !== 11) {
         return false;
@@ -96,7 +89,6 @@ function isValidPhone(phone) {
     return true;
 }
 
-// stops typed text from being read as HTML when we use innerHTML
 function escapeHtml(text) {
     let result = String(text);
     result = result.split("&").join("&amp;");
@@ -106,8 +98,7 @@ function escapeHtml(text) {
     return result;
 }
 
-// ---------- IDs ----------
-// makeId("O-", 5) gives "O-005"
+
 function makeId(prefix, number) {
     let digits = String(number);
     while (digits.length < 3) {
@@ -116,7 +107,7 @@ function makeId(prefix, number) {
     return prefix + digits;
 }
 
-// ---------- Dates (built-in Date object, YYYY-MM-DD texts) ----------
+
 function formatDate(dateObject) {
     let month = dateObject.getMonth() + 1;
     let day = dateObject.getDate();
@@ -139,7 +130,7 @@ function addDays(dateText, days) {
     return formatDate(result);
 }
 
-// number of days from the first date to the second date
+
 function daysBetween(fromText, toText) {
     const a = fromText.split("-");
     const b = toText.split("-");
@@ -148,13 +139,11 @@ function daysBetween(fromText, toText) {
     return Math.round((to - from) / (1000 * 60 * 60 * 24));
 }
 
-// =====================================================
-// PART 3: Customer dashboard
-// =====================================================
 
+//Customer dashboard
 const currentCustomerId = "U-003";
 
-// the logged-in customer (same data as U-003 in the users list above)
+
 const customerProfile = {
     id: "U-003",
     fullName: "Nirjora",
@@ -171,9 +160,6 @@ let orderCounter = orders.length + 1;
 let reservationCounter = reservations.length + 1;
 
 
-// =====================================================
-// Small helpers
-// =====================================================
 
 function getMenuItem(id) {
     for (let i = 0; i < menuItems.length; i++) {
@@ -205,7 +191,7 @@ function setRadioValue(name, value) {
     }
 }
 
-// item price x quantity + VAT (+ delivery charge for home delivery)
+
 function calcOrderTotal(price, qty, type) {
     const subTotal = price * qty;
     const vat = Math.round(subTotal * restaurantRules.vatPercent / 100);
@@ -233,7 +219,6 @@ function statusColor(status) {
     }
 }
 
-// fills a <select> with the menu using createElement / appendChild
 function fillMenuDropdown(selectId) {
     const select = document.getElementById(selectId);
     select.innerHTML = "";
@@ -251,7 +236,6 @@ function fillMenuDropdown(selectId) {
     }
 }
 
-// top box: name, id and counters
 function updateSummary() {
     const customer = getCurrentCustomer();
     let total = 0;
@@ -273,20 +257,15 @@ function updateSummary() {
 }
 
 
-// =====================================================
+
 // FEATURE 1: MENU & MY ORDERS  (Create, Read, Update, Delete, Search)
-// =====================================================
-
-// ---------- Menu ----------
-
-// called by the category buttons
 function showCategory(category) {
     currentCategory = category;
     document.getElementById("menuSearch").value = "";
     renderMenu();
 }
 
-// READ + SEARCH: builds the food cards for the chosen category
+
 function renderMenu() {
     const search = document.getElementById("menuSearch").value;
     let html = "";
@@ -316,7 +295,7 @@ function renderMenu() {
     }
     document.getElementById("menuGrid").innerHTML = html;
 
-    // title and the highlighted category button
+
     let title = currentCategory + " Items";
     if (currentCategory === "All") {
         title = "All Items";
@@ -336,8 +315,6 @@ function renderMenu() {
 }
 
 // ---------- My Orders ----------
-
-// READ + SEARCH: builds the table rows from the orders array
 function renderOrders() {
     const search = document.getElementById("orderSearch").value;
     let rows = "";
@@ -355,7 +332,7 @@ function renderOrders() {
         }
         count++;
 
-        // only Pending orders can be edited or cancelled
+
         let actions = "-";
         if (o.status === "Pending") {
             actions = '<button type="button" onclick="editOrder(' + i + ')">Edit</button> ' +
@@ -381,7 +358,7 @@ function renderOrders() {
     document.getElementById("ordersTableBody").innerHTML = rows;
 }
 
-// CREATE + UPDATE (called by onsubmit)
+
 function saveOrder() {
     const itemId = document.getElementById("orderItem").value;
     const qty = parseInt(document.getElementById("orderQty").value);
@@ -420,7 +397,7 @@ function saveOrder() {
     }
 
     if (valid === false) {
-        return false;   // stops the form from submitting
+        return false;
     }
 
     const item = getMenuItem(itemId);
@@ -431,7 +408,7 @@ function saveOrder() {
     }
 
     if (editIndex === -1) {
-        // CREATE
+
         const newOrder = {
             id: makeId("O-", orderCounter),
             customerId: currentCustomerId,
@@ -473,7 +450,6 @@ function saveOrder() {
     return false;
 }
 
-// UPDATE step 1: copy the order into the form
 function editOrder(index) {
     const order = orders[index];
     if (order.status !== "Pending") {
@@ -500,7 +476,7 @@ function editOrder(index) {
     document.getElementById("orderForm").scrollIntoView();
 }
 
-// DELETE
+
 function cancelOrder(index) {
     const order = orders[index];
     if (order.status !== "Pending") {
@@ -524,15 +500,13 @@ function cancelOrder(index) {
     refreshOrderViews();
 }
 
-// called by the Clear button
+
 function cancelOrderEdit() {
     editIndex = -1;
     document.getElementById("orderSaveBtn").value = "Place Order";
     clearErrors(["orderItemError", "orderQtyError", "orderTypeError", "orderAddressError", "orderPhoneError", "orderPaymentError"]);
 }
 
-// redraws everything that depends on the orders array
-// (My Orders, Your Cart, Bill Summary, Order Tracking and the top box)
 function refreshOrderViews() {
     renderOrders();
     renderCart();
@@ -543,12 +517,8 @@ function refreshOrderViews() {
 }
 
 
-// =====================================================
-// FEATURE 2 (UNIQUE): CART & BILL
-// =====================================================
 
-// Your Cart = every order the customer has placed.
-// Bill Summary = the total of all those ordered items.
+// FEATURE 2 (UNIQUE): CART & BILL
 function renderCart() {
     let rows = "";
     let count = 0;
@@ -593,11 +563,8 @@ function renderCart() {
 }
 
 
-// =====================================================
-// FEATURE 3 (UNIQUE): ORDER TRACKING
-// =====================================================
 
-// fills the order drop-down with the customer's orders (createElement)
+// FEATURE 3 (UNIQUE): ORDER TRACKING
 function renderTrackingOptions() {
     const select = document.getElementById("trackOrderId");
     const oldValue = select.value;
@@ -618,8 +585,6 @@ function renderTrackingOptions() {
     }
     select.value = oldValue;
 }
-
-// keeps the open tracking result up to date after an order is placed, edited or cancelled
 function refreshTrackResult() {
     if (document.getElementById("trackOrderId").value === "") {
         document.getElementById("trackResult").innerHTML = "";
@@ -663,14 +628,14 @@ function trackOrder() {
     html += "<p>" + percent + "% complete</p>";
 
     for (let j = 0; j < trackSteps.length; j++) {
-        let mark = "&#9675;";      // empty circle
+        let mark = "&#9675;";
         let stepColor = "gray";
         let weight = "normal";
         if (j < current) {
-            mark = "&#10004;";       // tick
+            mark = "&#10004;";
             stepColor = "green";
         } else if (j === current) {
-            mark = "&#9679;";        // filled circle
+            mark = "&#9679;";
             stepColor = color;
             weight = "bold";
         }
@@ -701,7 +666,7 @@ function trackOrder() {
     result.innerHTML = html;
 }
 
-// one colour-coded card for every order
+
 function renderTrackingCards() {
     let html = "";
     let count = 0;
@@ -725,10 +690,8 @@ function renderTrackingCards() {
 }
 
 
-// =====================================================
-// FEATURE 4 (UNIQUE): TABLE RESERVATION
-// =====================================================
 
+// FEATURE 4 (UNIQUE): TABLE RESERVATION
 function saveReservation() {
     const name = document.getElementById("resName").value.trim();
     const phone = document.getElementById("resPhone").value.trim();
@@ -776,7 +739,6 @@ function saveReservation() {
         valid = false;
     }
 
-    // the slot limit is checked against ALL customers' reservations
     if (valid === true) {
         let booked = 0;
         for (let i = 0; i < reservations.length; i++) {
@@ -798,7 +760,6 @@ function saveReservation() {
         return false;
     }
 
-    // occasion check boxes
     const selected = [];
     const boxes = document.getElementsByName("occasion");
     for (let j = 0; j < boxes.length; j++) {
@@ -881,27 +842,21 @@ function cancelReservation(index) {
     showMessage("reservationMessage", "Reservation " + r.id + " cancelled.", "red");
 }
 
-// name and phone come from the logged-in account
+
 function fillReservationDefaults() {
     const customer = getCurrentCustomer();
     document.getElementById("resName").value = customer.fullName;
     document.getElementById("resPhone").value = customer.phone;
 }
 
-
-// =====================================================
-// Start-up: runs when the page loads (scripts are at the end of <body>)
-// =====================================================
-
-// show only the first section; the nav links show the others
 showSection("menu");
 
 fillMenuDropdown("orderItem");
 
-// the order form starts with the account's phone number
+
 document.getElementById("orderPhone").value = getCurrentCustomer().phone;
 
-// reservation date: today up to 30 days ahead
+
 document.getElementById("resDate").setAttribute("min", todayString());
 document.getElementById("resDate").setAttribute("max", addDays(todayString(), 30));
 fillReservationDefaults();
