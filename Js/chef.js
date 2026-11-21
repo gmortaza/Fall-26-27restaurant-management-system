@@ -1,77 +1,199 @@
-// chef.js - chef.html, chef-orders.html, chef_stock.html
-let dates = { 101: "2026-11-01", 103: "2026-11-03", 104: "2026-11-04" };
+let orders = [
+  { id: 101, customer: "Akib", food: "Burger", quantity: 3, status: "Pending", date: "2026-11-01" },
+  { id: 103, customer: "Salma", food: "Pasta", quantity: 2, status: "Preparing", date: "2026-11-03" },
+  { id: 104, customer: "Mortaza", food: "Soft Drinks", quantity: 2, status: "Ready", date: "2026-11-04" }
+];
 
-// find a data-table by the text of its first header cell
-function table(first) {
-  let t = document.getElementsByClassName("data-table");
-  for (let i = 0; i < t.length; i++) {
-    if (t[i].rows[0].cells[0].textContent === first) return t[i];
+let foods = [
+  { name: "Burger", stock: 20, available: "yes" },
+  { name: "Pizza", stock: 15, available: "yes" },
+  { name: "Pasta", stock: 10, available: "yes" },
+  { name: "Soft Drinks", stock: 5, available: "yes" }
+];
+
+function showError(id, message) {
+  let span = document.getElementById(id + "_error");
+  if (span === null) {
+    span = document.createElement("span");
+    span.id = id + "_error";
+    span.style.color = "red";
+    document.getElementById(id).parentNode.appendChild(span);
   }
+  span.innerHTML = message;
 }
 
-// dashboard summary: count Pending / Preparing / Ready
-function showCounts() {
-  let t = table("ID");
-  let s = document.getElementsByClassName("summary-table")[0];
-  if (!t || !s) return;
-  let names = ["Pending", "Preparing", "Ready"];
-  let n = [0, 0, 0];
-  for (let i = 1; i < t.rows.length; i++) {
-    let k = names.indexOf(t.rows[i].cells[4].textContent);
-    if (k >= 0) n[k]++;
-  }
-  for (let i = 0; i < 3; i++) s.rows[i].cells[1].textContent = n[i];
-}
-
-function filterOrders(f) {
-  let t = table("ID");
-  let status = f.elements.status.value;
-  let date = f.elements.order_date.value;
-  for (let i = 1; i < t.rows.length; i++) {
-    let c = t.rows[i].cells;
-    let statusOk = status === "Select a Status" || c[4].textContent === status;
-    let dateOk = date === "" || dates[c[0].textContent] === date;
-    t.rows[i].style.display = statusOk && dateOk ? "" : "none";
-  }
-}
-
-function saveStock(x) {
-  if (x.food_name.value === "Select a Food") {
-    alert("Please select a food");
-    return;
-  }
-  if (x.stock.value < 0) {
-    alert("Stock cannot be negative");
-    return;
-  }
-  let t = table("Food");
-  for (let i = 1; i < t.rows.length; i++) {
-    if (t.rows[i].cells[0].textContent === x.food_name.value) {
-      t.rows[i].cells[1].textContent = x.stock.value + (x.available.value === "no" ? " (Out of stock)" : "");
+function clearErrors(ids) {
+  for (const id of ids) {
+    let span = document.getElementById(id + "_error");
+    if (span !== null) {
+      span.innerHTML = "";
     }
   }
 }
 
-document.addEventListener("submit", function (e) {
-  e.preventDefault();
-  let f = e.target;
-  let x = f.elements;
-  if (x.status) {
-    filterOrders(f);
-  } else if (x.new_status) {
-    f.closest("tr").cells[4].textContent = x.new_status.value;
+function getSelectedRadio(groupName) {
+  let radios = document.getElementsByName(groupName);
+  for (let i = 0; i < radios.length; i++) {
+    if (radios[i].checked) {
+      return radios[i].value;
+    }
+  }
+  return "";
+}
+
+function mark(value, current, word) {
+  if (value === current) {
+    return " " + word;
+  }
+  return "";
+}
+
+function availText(available) {
+  if (available === "yes") {
+    return "Available";
+  }
+  return "Out of stock";
+}
+
+// chef.html + chef-orders.html
+
+function showOrders(list) {
+  let rows = "";
+  for (let i = 0; i < list.length; i++) {
+    let o = list[i];
+    rows += "<tr><td>" + o.id + "</td><td>" + o.customer + "</td><td>" + o.food + "</td><td>" + o.quantity + "</td><td>" + o.status + "</td>";
+    rows += "<td><select id=\"status" + o.id + "\">";
+    rows += "<option" + mark("Pending", o.status, "selected") + ">Pending</option>";
+    rows += "<option" + mark("Preparing", o.status, "selected") + ">Preparing</option>";
+    rows += "<option" + mark("Ready", o.status, "selected") + ">Ready</option>";
+    rows += "</select> <input type=\"button\" value=\"Update\" onclick=\"updateStatus(" + o.id + ")\"></td></tr>";
+  }
+  if (rows === "") {
+    rows = "<tr><td colspan=\"6\">No orders found.</td></tr>";
+  }
+  document.getElementById("ordersBody").innerHTML = rows;
+}
+
+function filterOrders() {
+  let status = document.getElementById("status").value;
+  let date = document.getElementById("order_date").value;
+
+  let result = [];
+  for (let i = 0; i < orders.length; i++) {
+    let statusOk = status === "Select a Status" || orders[i].status === status;
+    let dateOk = date === "" || orders[i].date === date;
+    if (statusOk && dateOk) {
+      result.push(orders[i]);
+    }
+  }
+
+  showOrders(result);
+  return false;
+}
+
+function updateStatus(id) {
+  for (let i = 0; i < orders.length; i++) {
+    if (orders[i].id === id) {
+      orders[i].status = document.getElementById("status" + id).value;
+    }
+  }
+  filterOrders();
+  showCounts();
+}
+
+function showCounts() {
+  if (document.getElementById("pendingCount") === null) {
+    return;
+  }
+  let pending = 0;
+  let preparing = 0;
+  let ready = 0;
+  for (let i = 0; i < orders.length; i++) {
+    if (orders[i].status === "Pending") {
+      pending++;
+    } else if (orders[i].status === "Preparing") {
+      preparing++;
+    } else {
+      ready++;
+    }
+  }
+  document.getElementById("pendingCount").innerHTML = pending;
+  document.getElementById("preparingCount").innerHTML = preparing;
+  document.getElementById("readyCount").innerHTML = ready;
+}
+
+// chef.html food stock table
+
+function showStock() {
+  let rows = "";
+  for (let i = 0; i < foods.length; i++) {
+    let f = foods[i];
+    rows += "<tr><td>" + f.name + "</td><td>" + f.stock + "</td><td>" + availText(f.available) + "</td><td>";
+    rows += "<input type=\"radio\" id=\"yes" + i + "\" name=\"available" + i + "\" value=\"yes\"" + mark("yes", f.available, "checked") + ">";
+    rows += "<label for=\"yes" + i + "\">Available</label> ";
+    rows += "<input type=\"radio\" id=\"no" + i + "\" name=\"available" + i + "\" value=\"no\"" + mark("no", f.available, "checked") + ">";
+    rows += "<label for=\"no" + i + "\">Out of stock</label> ";
+    rows += "<input type=\"button\" value=\"Save\" onclick=\"saveAvailability(" + i + ")\"></td></tr>";
+  }
+  document.getElementById("stockBody").innerHTML = rows;
+}
+
+function saveAvailability(index) {
+  foods[index].available = getSelectedRadio("available" + index);
+  showStock();
+}
+
+// chef_stock.html
+
+function showFoodStock() {
+  let rows = "";
+  for (let i = 0; i < foods.length; i++) {
+    rows += "<tr><td>" + foods[i].name + "</td><td>" + foods[i].stock + "</td></tr>";
+  }
+  document.getElementById("foodBody").innerHTML = rows;
+}
+
+function saveStock() {
+  let name = document.getElementById("food_name").value;
+  let stock = Number(document.getElementById("stock").value);
+  let available = getSelectedRadio("available");
+  let isValid = true;
+
+  clearErrors(["food_name", "stock"]);
+
+  if (name === "Select a Food") {
+    showError("food_name", "Select a food.");
+    isValid = false;
+  }
+  if (stock < 0) {
+    showError("stock", "Stock cannot be negative.");
+    isValid = false;
+  }
+  if (isValid === false) {
+    return false;
+  }
+
+  for (let i = 0; i < foods.length; i++) {
+    if (foods[i].name === name) {
+      foods[i].stock = stock;
+      foods[i].available = available;
+    }
+  }
+
+  showFoodStock();
+  document.getElementById("stock_form").reset();
+  return false;
+}
+
+window.addEventListener("load", function () {
+  if (document.getElementById("ordersBody") !== null) {
+    showOrders(orders);
     showCounts();
-  } else if (x.food) {
-    f.closest("tr").cells[2].textContent = x.available.value === "yes" ? "Available" : "Out of stock";
-  } else if (x.food_name) {
-    saveStock(x);
+  }
+  if (document.getElementById("stockBody") !== null) {
+    showStock();
+  }
+  if (document.getElementById("foodBody") !== null) {
+    showFoodStock();
   }
 });
-
-document.addEventListener("reset", function (e) {
-  if (e.target.elements.status) {
-    setTimeout(function () { filterOrders(e.target); }, 0);
-  }
-});
-
-window.addEventListener("load", showCounts);
