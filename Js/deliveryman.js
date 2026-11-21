@@ -1,12 +1,4 @@
-// =====================================================
-// deliveryman.js - Delivery Man Dashboard
-// Restaurant Management System
-// =====================================================
-
-// The logged-in user of this page (frontend only, like currentStudentId in the demo project)
 const currentRiderName = "Delivery Man";
-
-// ---------------------- DATA (arrays of objects) ----------------------
 
 let records = [
     { orderId: "ORD-090", area: "Mirpur", distance: 9.5, payment: "Cash on Delivery", date: "2026-11-15", result: "Delivered", remarks: "" },
@@ -31,14 +23,12 @@ let settlements = [
     { date: "2026-11-17", amount: 500, note: "Given to cashier" }
 ];
 
-// -1 means "adding a new record", otherwise the index of the record being edited
 let editIndex = -1;
 
 const sectionIds = ["records", "assigned", "cash", "earnings"];
 
 // ---------------------- COMMON HELPER FUNCTIONS ----------------------
 
-// Show one section and hide the others
 function showSection(name) {
     for (let i = 0; i < sectionIds.length; i++) {
         if (sectionIds[i] === name) {
@@ -49,7 +39,6 @@ function showSection(name) {
     }
 }
 
-// Show a red error message next to a field (same as in login.js)
 function showError(id, message) {
     let span = document.getElementById(id + "_error");
     if (span === null) {
@@ -70,17 +59,12 @@ function clearErrors(ids) {
     }
 }
 
-// Search helper: does the text contain the keyword?
 function containsText(text, keyword) {
     return text.toLowerCase().indexOf(keyword.toLowerCase()) !== -1;
 }
-
-// Delete helper: returns a new array without the item at this index
 function removeAt(array, index) {
     return array.slice(0, index).concat(array.slice(index + 1));
 }
-
-// Today's date as YYYY-MM-DD text
 function todayString() {
     let today = new Date();
     let month = today.getMonth() + 1;
@@ -94,7 +78,6 @@ function todayString() {
     return today.getFullYear() + "-" + month + "-" + day;
 }
 
-// Get the checked value of a radio group
 function getSelectedRadio(groupName) {
     let radios = document.getElementsByName(groupName);
     for (let i = 0; i < radios.length; i++) {
@@ -105,10 +88,7 @@ function getSelectedRadio(groupName) {
     return "";
 }
 
-
-// =====================================================
 // 1. DELIVERY RECORDS (Create, Read, Update, Delete, Search)
-// =====================================================
 
 // Create + Update
 function saveRecord() {
@@ -122,8 +102,6 @@ function saveRecord() {
     let isValid = true;
 
     clearErrors(["orderId", "area", "distance", "payCash", "deliveryDate", "result", "remarks"]);
-
-    // Order ID
     if (orderId === "") {
         showError("orderId", "Please enter the order ID.");
         isValid = false;
@@ -139,13 +117,11 @@ function saveRecord() {
         }
     }
 
-    // Area
     if (area === "") {
         showError("area", "Please select the customer area.");
         isValid = false;
     }
 
-    // Distance
     if (distance === "") {
         showError("distance", "Please enter the distance.");
         isValid = false;
@@ -154,7 +130,6 @@ function saveRecord() {
         isValid = false;
     }
 
-    // Date (cannot be in the future)
     if (date === "") {
         showError("deliveryDate", "Please select the delivery date.");
         isValid = false;
@@ -163,13 +138,12 @@ function saveRecord() {
         isValid = false;
     }
 
-    // Result
     if (result === "") {
         showError("result", "Please select the result.");
         isValid = false;
     }
 
-    // Remarks
+
     if (remarks.length > 100) {
         showError("remarks", "Remarks must be 100 characters or less.");
         isValid = false;
@@ -200,13 +174,12 @@ function saveRecord() {
         alert("Delivery record updated.");
     }
 
-    // reset() also calls resetRecordForm() because of onreset in the form
     document.getElementById("recordForm").reset();
     renderRecords();
     return false;
 }
 
-// Put the form back to "Add" mode
+
 function resetRecordForm() {
     editIndex = -1;
     document.getElementById("recordFormTitle").innerHTML = "Add Delivery Record";
@@ -214,7 +187,6 @@ function resetRecordForm() {
     clearErrors(["orderId", "area", "distance", "payCash", "deliveryDate", "result", "remarks"]);
 }
 
-// Read + Search
 function renderRecords() {
     let keyword = document.getElementById("recordSearch").value.trim();
     let rows = "";
@@ -257,7 +229,7 @@ function renderRecords() {
     }
 }
 
-// Update: copy the record into the form
+
 function editRecord(index) {
     let r = records[index];
 
@@ -279,7 +251,7 @@ function editRecord(index) {
     document.getElementById("recordSaveBtn").value = "Update Record";
 }
 
-// Delete
+
 function deleteRecord(index) {
     records = removeAt(records, index);
 
@@ -294,11 +266,8 @@ function deleteRecord(index) {
 }
 
 
-// =====================================================
-// 2. ASSIGNED DELIVERIES (Unique Feature 1)
-// =====================================================
+// 2. ASSIGNED DELIVERIES 
 
-// Fill the order drop-down with createElement (only orders that are not finished)
 function fillAssignDropdown() {
     let select = document.getElementById("assignOrder");
     select.innerHTML = "<option value=\"\">Select Order</option>";
@@ -342,7 +311,7 @@ function updateDelivery() {
         return false;
     }
 
-    // Find the selected delivery
+
     let found = null;
     for (const d of deliveries) {
         if (d.orderId === orderId) {
@@ -350,7 +319,6 @@ function updateDelivery() {
         }
     }
 
-    // Which status is needed, and which status comes next?
     let requiredStatus = "";
     let newStatus = "";
     switch (action) {
@@ -426,10 +394,7 @@ function renderAssigned() {
     document.getElementById("assignBody").innerHTML = rows;
 }
 
-
-// =====================================================
 // 4. EARNINGS CALCULATOR (Unique Feature 3)
-// =====================================================
 
 function calculateEarnings() {
     let count = document.getElementById("earnCount").value;
@@ -515,11 +480,9 @@ function clearEarningsResult() {
 }
 
 
-// =====================================================
 // 3. CASH COLLECTION & SETTLEMENT (Unique Feature 2)
-// =====================================================
 
-// Total Cash on Delivery money collected from delivered orders
+
 function getCashCollected() {
     let total = 0;
     for (const d of deliveries) {
@@ -530,7 +493,6 @@ function getCashCollected() {
     return total;
 }
 
-// Total money already deposited at the restaurant
 function getCashDeposited() {
     let total = 0;
     for (const s of settlements) {
@@ -539,7 +501,7 @@ function getCashDeposited() {
     return total;
 }
 
-// Show the three numbers and both tables
+
 function renderCash() {
     let collected = getCashCollected();
     let deposited = getCashDeposited();
@@ -548,7 +510,7 @@ function renderCash() {
     document.getElementById("cashDeposited").innerHTML = deposited;
     document.getElementById("cashInHand").innerHTML = collected - deposited;
 
-    // Table 1: delivered COD orders
+
     let orderRows = "";
     for (const d of deliveries) {
         if (d.status === "Delivered" && d.payment === "Cash on Delivery") {
@@ -565,7 +527,7 @@ function renderCash() {
     }
     document.getElementById("cashOrdersBody").innerHTML = orderRows;
 
-    // Table 2: deposit history
+
     let depositRows = "";
     for (let i = 0; i < settlements.length; i++) {
         let noteText = settlements[i].note;
@@ -594,7 +556,7 @@ function saveSettlement() {
 
     clearCashErrors();
 
-    // Amount
+
     if (amount === "") {
         showError("depositAmount", "Please enter the amount.");
         isValid = false;
@@ -609,7 +571,7 @@ function saveSettlement() {
         isValid = false;
     }
 
-    // Date (cannot be in the future)
+
     if (date === "") {
         showError("depositDate", "Please select the deposit date.");
         isValid = false;
@@ -618,7 +580,7 @@ function saveSettlement() {
         isValid = false;
     }
 
-    // Note
+
     if (note.length > 60) {
         showError("depositNote", "Note must be 60 characters or less.");
         isValid = false;
@@ -639,10 +601,7 @@ function clearCashErrors() {
     clearErrors(["depositAmount", "depositDate", "depositNote"]);
 }
 
-
-// =====================================================
 // PAGE LOAD
-// =====================================================
 
 window.addEventListener("load", function () {
     document.getElementById("riderName").innerHTML = currentRiderName;
