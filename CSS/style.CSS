@@ -548,7 +548,7 @@ body.customer {
 }
 
 
-/* ---------- 2. Base text ---------- */
+
 body.customer {
     color: var(--c-text);
     font-weight: 600;
@@ -570,7 +570,7 @@ body.customer th {
 }
 
 
-/* ---------- 3. Header ---------- */
+
 body.customer header {
     background: linear-gradient(135deg, var(--c-dark) 0%, var(--c-brown) 100%);
     color: #fff;
@@ -593,7 +593,7 @@ body.customer header p {
 }
 
 
-/* ---------- 4. Navigation ---------- */
+
 body.customer nav {
     background: #5c2e0e;
     flex-wrap: wrap;
@@ -615,7 +615,7 @@ body.customer nav a:hover {
 }
 
 
-/* ---------- 5. Page layout and section panels ---------- */
+
 body.customer main {
     max-width: 1100px;
     margin: 0 auto;
@@ -656,7 +656,7 @@ body.customer .section>p {
 }
 
 
-/* ---------- 6. Welcome box ---------- */
+
 body.customer #welcomeBox {
     margin: 0;
     padding: 20px 26px;
@@ -680,7 +680,7 @@ body.customer #welcomeBox span {
 }
 
 
-/* ---------- 7. Menu ---------- */
+
 body.customer #categoryTabs {
     display: flex;
     flex-wrap: wrap;
@@ -711,7 +711,7 @@ body.customer button.tab img {
     object-fit: cover;
 }
 
-/* food cards (built by customer.js inside #menuGrid) */
+
 body.customer #menuGrid>div {
     flex: 1 1 220px;
     max-width: 260px;
@@ -751,7 +751,7 @@ body.customer #menuGrid small {
 }
 
 
-/* ---------- 8. Forms ---------- */
+
 body.customer form {
     max-width: 760px;
     margin: 18px 0;
@@ -769,8 +769,7 @@ body.customer fieldset {
     background: rgba(255, 244, 228, 0.7);
 }
 
-/* the order / reservation forms already have their own box,
-   so the fieldset inside them stays plain */
+
 body.customer form fieldset {
     margin: 0;
     padding: 0;
@@ -853,7 +852,7 @@ body.customer .error {
     font-weight: 700;
 }
 
-/* status messages under tables / buttons */
+
 body.customer p[id$="Message"],
 body.customer #couponMessage {
     color: var(--c-mid);
@@ -861,7 +860,7 @@ body.customer #couponMessage {
 }
 
 
-/* ---------- 9. Buttons (the ONLY blue on the page) ---------- */
+
 body.customer button,
 body.customer input[type="submit"],
 body.customer input[type="reset"] {
@@ -891,13 +890,12 @@ body.customer input[type="reset"]:focus-visible {
     outline-offset: 2px;
 }
 
-/* small buttons inside tables */
+
 body.customer td button {
     padding: 6px 12px;
     font-size: 0.85rem;
 }
 
-/* second button in a table cell = delete / cancel / remove */
 body.customer td button+button {
     background: #c0392b;
 }
@@ -907,7 +905,7 @@ body.customer td button+button:hover {
 }
 
 
-/* ---------- 10. Tables ---------- */
+
 body.customer table[border="1"] {
     width: 100%;
     margin: 14px 0;
@@ -956,7 +954,7 @@ body.customer #billTable tr:last-child td {
 }
 
 
-/* ---------- 11. Order tracking ---------- */
+
 body.customer #trackResult:not(:empty) {
     margin: 18px 0;
     padding: 18px 22px;
@@ -988,7 +986,7 @@ body.customer #trackingCards>div:hover {
 }
 
 
-/* ---------- 12. Footer ---------- */
+
 body.customer footer {
     margin-top: 30px;
     padding: 20px;
@@ -1004,7 +1002,7 @@ body.customer footer p {
 }
 
 
-/* ---------- 13. Mobile ---------- */
+
 @media (max-width: 768px) {
     body.customer .section {
         padding: 20px 16px 24px;
