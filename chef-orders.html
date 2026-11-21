@@ -15,7 +15,7 @@
         <a href="login.html">Logout</a>
     </nav>
 
-    <form method="get" class="card">
+    <form method="get" class="card" onsubmit="return checkFilter()" onreset="clearErrors(['status', 'order_date'])">
         <fieldset>
             <legend>Order Queue</legend>
             <table>
@@ -44,7 +44,7 @@
         </fieldset>
     </form>
 
-    <table class="data-table card">
+    <table class="card">
         <tr>
             <th>ID</th>
             <th>Customer</th>
@@ -112,7 +112,6 @@
     <table class="footer">
         <tr><td>&copy; 2026 Restaurant Management System</td></tr>
     </table>
-
     <script src="Js/chef.js"></script>
 </body>
 </html>

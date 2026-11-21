@@ -15,7 +15,7 @@
         <a href="login.html">Logout</a>
     </nav>
 
-    <form method="get" class="card">
+    <form method="get" class="card" onsubmit="return checkStock()" onreset="clearErrors(['food_name', 'stock'])">
         <fieldset>
             <legend>Update Food Stock</legend>
             <table>
@@ -33,7 +33,7 @@
                 </tr>
                 <tr>
                     <td><label for="stock">Stock:</label></td>
-                    <td><input type="number" id="stock" name="stock" required></td>
+                    <td><input type="number" id="stock" name="stock"></td>
                 </tr>
                 <tr>
                     <td>Available:</td>
@@ -54,7 +54,7 @@
         </fieldset>
     </form>
 
-    <table class="data-table card">
+    <table class="card">
         <tr>
             <th>Food</th>
             <th>Stock</th>
@@ -68,7 +68,6 @@
     <table class="footer">
         <tr><td>&copy; 2026 Restaurant Management System</td></tr>
     </table>
-
     <script src="Js/chef.js"></script>
 </body>
 </html>
