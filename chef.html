@@ -10,20 +10,20 @@
     <nav>
         <a href="index.html"><img src="Image/logo.png" alt="Restaurant Logo"></a>
         <a href="chef.html" class="active">Dashboard</a>
-        <a href="#orders">Order Queue</a>
+        <a href="#queue">Order Queue</a>
         <a href="#stock">Food Stock</a>
         <a href="login.html">Logout</a>
     </nav>
 
     <h2>Welcome, Chef</h2>
 
-    <table class="summary-table card">
+    <table class="card">
         <tr><th>Pending Orders:</th><td>1</td></tr>
         <tr><th>Preparing Orders:</th><td>1</td></tr>
         <tr><th>Ready Orders:</th><td>1</td></tr>
     </table>
 
-    <form method="get" class="card">
+    <form method="get" class="card" onsubmit="return checkFilter()" onreset="clearErrors(['status', 'order_date'])">
         <fieldset>
             <legend>Filter Orders</legend>
             <table>
@@ -52,7 +52,7 @@
         </fieldset>
     </form>
 
-    <table class="data-table card" id="orders">
+    <table class="card" id="queue">
         <caption>Order Queue</caption>
         <tr>
             <th>ID</th>
@@ -118,7 +118,7 @@
         </tr>
     </table>
 
-    <table class="data-table card" id="stock">
+    <table class="card" id="stock">
         <caption>Food Stock</caption>
         <tr>
             <th>Food</th>
