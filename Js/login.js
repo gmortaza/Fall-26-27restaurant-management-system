@@ -26,10 +26,9 @@ function clearErrors(ids) {
 function validateLogin() {
   let email = document.getElementById("email").value.trim();
   let password = document.getElementById("password").value;
-  let type = document.getElementById("user_type").value;
   let isValid = true;
 
-  clearErrors(["email", "password", "user_type"]);
+  clearErrors(["email", "password"]);
 
   if (email === "") {
     showError("email", "Please enter your email.");
@@ -42,22 +41,18 @@ function validateLogin() {
     showError("password", "Password must be at least 6 characters.");
     isValid = false;
   }
-  if (type === "") {
-    showError("user_type", "Please select a user type.");
-    isValid = false;
-  }
 
   if (isValid === false) {
     return false;
   }
   let foundUser = null;
   for (const user of users) {
-    if (user.email.toLowerCase() === email.toLowerCase() && user.role === type) {
+    if (user.email.toLowerCase() === email.toLowerCase()) {
       foundUser = user;
     }
   }
   if (foundUser === null || foundUser.password !== password) {
-    showError("password", "Wrong email, password or user type.");
+    showError("password", "Wrong email or password.");
     return false;
   }
   if (foundUser.status === "Pending") {
@@ -83,17 +78,14 @@ function validateLogin() {
       form.action = "index.html";
       break;
   }
-
   console.log("Login OK: " + foundUser.name + " (" + foundUser.role + ") -> " + form.action);
   return true;
 }
 function fillDemo(button) {
-  document.getElementById("user_type").value = button.getAttribute("data-type");
   document.getElementById("email").value = button.getAttribute("data-email");
   document.getElementById("password").value = button.getAttribute("data-password");
-  clearErrors(["email", "password", "user_type"]);
+  clearErrors(["email", "password"]);
 }
-
 function showForm(name) {
   let ids = ["login", "signup", "forgot"];
   for (let i = 0; i < ids.length; i++) {
@@ -157,7 +149,6 @@ function validateSignup() {
   if (isValid === false) {
     return false;
   }
-
   users.push({ name: name, email: email, password: password, role: "Customer", status: "Active" });
   console.log(users);
   alert("Account created. Please login.");
