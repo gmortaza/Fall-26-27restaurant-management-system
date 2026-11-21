@@ -69,13 +69,13 @@ function validateLogin() {
       form.action = "admin/users.html";
       break;
     case "Customer":
-      form.action = "index.html";
+      form.action = "customer.html";
       break;
     case "chefs":
       form.action = "index.html";
       break;
     case "Delivery Man":
-      form.action = "index.html";
+      form.action = "deliveryman.html";
       break;
   }
   console.log("Login OK: " + foundUser.name + " (" + foundUser.role + ") -> " + form.action);

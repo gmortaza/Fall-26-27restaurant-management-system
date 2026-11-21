@@ -1,0 +1,20 @@
+/* chef.css - chef.html, chef-orders.html, chef_stock.html */
+body { margin: 0; font-family: Arial, sans-serif; background: #f3e3c3; }
+
+h2, legend { color: #123A63; }
+h2 { text-align: center; }
+legend { font-size: 20px; }
+
+nav { background: #0e366d; padding: 16px 20px; }
+nav a { color: #fff; text-decoration: none; padding: 10px 15px; }
+nav a:hover, nav a.active { color: #f5a523; }
+nav img { height: 55px; }
+
+.card { background: #fff4e4; border-top: 6px solid #f5a623; margin: 20px auto; padding: 20px; max-width: 700px; }
+table { margin: 0 auto; }
+td, th { padding: 10px; }
+th { background: #123A63; color: #fff; }
+fieldset { border: none; }
+input, select { padding: 8px; }
+.btn-row { text-align: center; }
+.footer { width: 100%; background: #123A63; color: #fff; text-align: center; }

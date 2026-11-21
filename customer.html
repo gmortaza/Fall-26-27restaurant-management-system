@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Management System - Customer Dashboard</title>
+    <link rel="stylesheet" href="CSS/style.CSS">
+</head>
+
+<body class="customer">
+
+
+    <header>
+        <h1>Restaurant Management System</h1>
+        <p>Customer Dashboard</p>
+    </header>
+
+
+    <nav>
+
+        <a href="#" onclick="showSection('menu')">Menu &amp; Orders</a>
+        <a href="#" onclick="showSection('cart')">Cart &amp; Bill</a>
+        <a href="#" onclick="showSection('tracking')">Order Tracking</a>
+        <a href="#" onclick="showSection('reservation')">Table Reservation</a>
+        <a href="login.html">Logout</a>
+    </nav>
+
+    <main>
+
+        <!-- Welcome bar -->
+        <div class="card" id="welcomeBox">
+            <h2>Welcome, <span id="customerName">Customer</span></h2>
+            <p>Customer ID: <span id="customerId">U-003</span></p>
+            <p>Total orders: <span id="totalOrders">0</span> | Pending orders: <span id="pendingOrders">0</span></p>
+        </div>
+
+        <!-- ============================================================
+         FEATURE 1: MENU & MY ORDERS  (Create, Read, Update, Delete, Search)
+         ============================================================ -->
+        <section id="menu" class="section">
+            <h2>Menu &amp; My Orders</h2>
+
+
+            <h3>Our Menu</h3>
+            <p>Choose a category or search for a food. To order, use the Place an Order form below.</p>
+
+            <div id="categoryTabs">
+                <button type="button" class="tab" id="tab-All" onclick="showCategory('All')">All</button>
+                <button type="button" class="tab" id="tab-Pizza" onclick="showCategory('Pizza')">
+                    <img src="Image/pizza.png" alt="Pizza" width="40" height="40"> Pizza
+                </button>
+                <button type="button" class="tab" id="tab-Pasta" onclick="showCategory('Pasta')">
+                    <img src="Image/pasta.png" alt="Pasta" width="40" height="40"> Pasta
+                </button>
+                <button type="button" class="tab" id="tab-Burger" onclick="showCategory('Burger')">
+                    <img src="Image/burger.png" alt="Burger" width="40" height="40"> Burger
+                </button>
+                <button type="button" class="tab" id="tab-Drinks" onclick="showCategory('Drinks')">
+                    <img src="Image/drinks.png" alt="Drinks" width="40" height="40"> Drinks
+                </button>
+            </div>
+
+            <p>
+                <label for="menuSearch">Search menu:</label>
+                <input type="text" id="menuSearch" placeholder="Search by name or category..." onkeyup="renderMenu()">
+            </p>
+
+            <h4 id="menuTitle">All Items</h4>
+            <div id="menuGrid" style="display:flex; flex-wrap:wrap; gap:15px;">
+                <!-- food cards are built by renderMenu() in customer.js -->
+            </div>
+
+
+            <h3>Place an Order</h3>
+            <form id="orderForm" onsubmit="return saveOrder()">
+                <fieldset>
+                    <legend>Place / Update Order</legend>
+                    <table>
+                        <tr>
+                            <td><label for="orderItem">Food Item:</label></td>
+                            <td>
+                                <select id="orderItem" name="orderItem">
+                                    <option value="">-- Select an item --</option>
+                                </select>
+                                <span id="orderItemError" class="error"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="orderQty">Quantity:</label></td>
+                            <td>
+                                <input type="number" id="orderQty" name="orderQty" min="1" max="20" value="1">
+                                <span id="orderQtyError" class="error"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Order Type:</td>
+                            <td>
+                                <input type="radio" id="typeDelivery" name="orderType" value="Delivery" checked>
+                                <label for="typeDelivery">Home Delivery</label>
+                                <input type="radio" id="typePickup" name="orderType" value="Pickup">
+                                <label for="typePickup">Pickup</label>
+                                <input type="radio" id="typeDineIn" name="orderType" value="Dine-in">
+                                <label for="typeDineIn">Dine-in</label>
+                                <span id="orderTypeError" class="error"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="orderAddress">Delivery Address:</label></td>
+                            <td>
+                                <textarea id="orderAddress" name="orderAddress" rows="2" cols="30"
+                                    placeholder="House, road, area (needed for Home Delivery)"></textarea>
+                                <span id="orderAddressError" class="error"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="orderPhone">Phone:</label></td>
+                            <td>
+                                <input type="tel" id="orderPhone" name="orderPhone" placeholder="01XXXXXXXXX">
+                                <span id="orderPhoneError" class="error"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="orderPayment">Payment Method:</label></td>
+                            <td>
+                                <select id="orderPayment" name="orderPayment">
+                                    <option value="">-- Select --</option>
+                                    <option value="Cash">Cash on Delivery</option>
+                                    <option value="bKash">bKash</option>
+                                    <option value="Nagad">Nagad</option>
+                                    <option value="Card">Card</option>
+                                </select>
+                                <span id="orderPaymentError" class="error"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="orderNote">Special Note:</label></td>
+                            <td>
+                                <textarea id="orderNote" name="orderNote" rows="2" cols="30"
+                                    placeholder="Extra cheese, less spicy, no ice, etc."></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="submit" id="orderSaveBtn" value="Place Order">
+                                <input type="reset" value="Clear" onclick="cancelOrderEdit()">
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </form>
+
+            <!-- ---------- My orders (Read / Search / Update / Delete) ---------- -->
+            <h3>My Orders</h3>
+            <p>Only <b>Pending</b> orders can be edited or cancelled.</p>
+            <input type="text" id="orderSearch" placeholder="Search by item, type, payment or status..."
+                onkeyup="renderOrders()">
+
+            <table border="1" id="ordersTable">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Item</th>
+                        <th>Qty</th>
+                        <th>Type</th>
+                        <th>Payment</th>
+                        <th>Total (Tk)</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                    <!-- rows are built by renderOrders() in customer.js -->
+                </tbody>
+            </table>
+            <p id="ordersMessage"></p>
+        </section>
+
+        <!-- ============================================================
+         FEATURE 2 (UNIQUE): CART & BILL
+         ============================================================ -->
+        <section id="cart" class="section">
+            <h2>Cart &amp; Bill Calculator</h2>
+
+            <h3>Your Cart</h3>
+            <table border="1" id="cartTable">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Item</th>
+                        <th>Price (Tk)</th>
+                        <th>Qty</th>
+                        <th>Subtotal (Tk)</th>
+                    </tr>
+                </thead>
+                <tbody id="cartTableBody">
+                    <!-- rows are built by renderCart() in customer.js -->
+                </tbody>
+            </table>
+
+            <h3>Bill Summary</h3>
+            <table border="1" id="billTable">
+                <tr>
+                    <td>Sub Total</td>
+                    <td><span id="billSubTotal">0</span> Tk</td>
+                </tr>
+                <tr>
+                    <td>VAT (5%)</td>
+                    <td><span id="billVat">0</span> Tk</td>
+                </tr>
+                <tr>
+                    <td>Delivery Charge</td>
+                    <td><span id="billDelivery">0</span> Tk</td>
+                </tr>
+                <tr>
+                    <td><b>Grand Total</b></td>
+                    <td><b><span id="billGrandTotal">0</span> Tk</b></td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- ============================================================
+         FEATURE 3 (UNIQUE): ORDER TRACKING
+         ============================================================ -->
+        <section id="tracking" class="section">
+            <h2>Order Tracking</h2>
+            <p>Choose one of your orders to see where it is right now.</p>
+
+            <fieldset>
+                <legend>Track an Order</legend>
+                <label for="trackOrderId">Order ID:</label>
+                <select id="trackOrderId" name="trackOrderId">
+                    <option value="">-- Select an order --</option>
+                </select>
+                <button type="button" onclick="trackOrder()">Track</button>
+                <span id="trackError" class="error"></span>
+            </fieldset>
+
+            <div id="trackResult">
+                <!-- tracking steps (Pending > Confirmed > Preparing > On the way > Delivered) are built here by trackOrder() -->
+            </div>
+
+            <h3>All My Orders at a Glance</h3>
+            <div id="trackingCards">
+                <!-- colour-coded status cards are built here by renderTrackingCards() -->
+            </div>
+        </section>
+
+        <!-- ============================================================
+         FEATURE 4 (UNIQUE): TABLE RESERVATION
+         ============================================================ -->
+        <section id="reservation" class="section">
+            <h2>Table Reservation</h2>
+            <p>Book a table for dine-in. Each time slot has a limit of <b>20 guests</b>.</p>
+
+            <form id="reservationForm" onsubmit="return saveReservation()">
+                <fieldset>
+                    <legend>Reserve a Table</legend>
+                    <table>
+                        <tr>
+                            <td><label for="resName">Name:</label></td>
+                            <td>
+                                <input type="text" id="resName" name="resName">
+                                <span id="resNameError" class="error"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="resPhone">Phone:</label></td>
+                            <td>
+                                <input type="tel" id="resPhone" name="resPhone" placeholder="01XXXXXXXXX">
+                                <span id="resPhoneError" class="error"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="resDate">Date:</label></td>
+                            <td>
+                                <input type="date" id="resDate" name="resDate">
+                                <span id="resDateError" class="error"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="resTime">Time:</label></td>
+                            <td>
+                                <input type="time" id="resTime" name="resTime" min="11:00" max="22:00">
+                                <span id="resTimeError" class="error"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="resGuests">Number of Guests:</label></td>
+                            <td>
+                                <input type="number" id="resGuests" name="resGuests" min="1" max="12" value="2">
+                                <span id="resGuestsError" class="error"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="resSeating">Seating Area:</label></td>
+                            <td>
+                                <select id="resSeating" name="resSeating">
+                                    <option value="">-- Select --</option>
+                                    <option value="Indoor">Indoor</option>
+                                    <option value="Outdoor">Outdoor</option>
+                                    <option value="Family Cabin">Family Cabin</option>
+                                    <option value="Rooftop">Rooftop</option>
+                                </select>
+                                <span id="resSeatingError" class="error"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Occasion:</td>
+                            <td>
+                                <input type="checkbox" id="occBirthday" name="occasion" value="Birthday">
+                                <label for="occBirthday">Birthday</label>
+                                <input type="checkbox" id="occAnniversary" name="occasion" value="Anniversary">
+                                <label for="occAnniversary">Anniversary</label>
+                                <input type="checkbox" id="occMeeting" name="occasion" value="Business Meeting">
+                                <label for="occMeeting">Business Meeting</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="resNote">Special Request:</label></td>
+                            <td>
+                                <textarea id="resNote" name="resNote" rows="2" cols="30"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="submit" value="Reserve Table">
+                                <input type="reset" value="Clear">
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </form>
+
+            <h3>My Reservations</h3>
+            <table border="1" id="reservationTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Guests</th>
+                        <th>Seating</th>
+                        <th>Occasion</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="reservationTableBody">
+                    <!-- rows are built by renderReservations() in customer.js -->
+                </tbody>
+            </table>
+            <p id="reservationMessage"></p>
+        </section>
+
+    </main>
+
+
+    <footer>
+        <p>&copy; 2026 Restaurant Management System</p>
+    </footer>
+
+    <!-- Script at the end of body -->
+    <script src="Js/customer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Man Dashboard - Restaurant Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="dashboard">
+
+    <!-- ================= NAVIGATION ================= -->
+    <nav>
+        <a class="logo" href="index.html"><img src="./Image/logo.png" alt="Restaurant Logo"></a>
+        <a href="#" onclick="showSection('records'); return false;">Delivery Records</a>
+        <a href="#" onclick="showSection('assigned'); return false;">Assigned Deliveries</a>
+        <a href="#" onclick="showSection('cash'); return false;">Cash Settlement</a>
+        <a href="#" onclick="showSection('earnings'); return false;">Earnings Calculator</a>
+        <a href="login.html">Logout</a>
+    </nav>
+
+    <!-- ================= HEADER ================= -->
+    <header>
+        <h2>Delivery Man Dashboard &mdash; Welcome, <span id="riderName"></span></h2>
+    </header>
+
+    <main>
+
+        <!-- ========== 1. DELIVERY RECORDS (Create, Read, Update, Delete, Search) ========== -->
+        <section class="section" id="records">
+            <h2>My Delivery Records</h2>
+
+            <form id="recordForm" onsubmit="return saveRecord()" onreset="resetRecordForm()">
+                <fieldset>
+                    <legend id="recordFormTitle">Add Delivery Record</legend>
+                    <table>
+                        <tr>
+                            <td><label for="orderId">Order ID:</label></td>
+                            <td><input type="text" id="orderId" name="orderId" placeholder="ORD-101"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="area">Customer Area:</label></td>
+                            <td>
+                                <select id="area" name="area">
+                                    <option value="">Select Area</option>
+                                    <option value="Dhanmondi">Dhanmondi</option>
+                                    <option value="Mohammadpur">Mohammadpur</option>
+                                    <option value="Banani">Banani</option>
+                                    <option value="Gulshan">Gulshan</option>
+                                    <option value="Mirpur">Mirpur</option>
+                                    <option value="Uttara">Uttara</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="distance">Distance (km):</label></td>
+                            <td><input type="num" id="distance" name="distance" min="0.5" max="30" step="0.1"></td>
+                        </tr>
+                        <tr>
+                            <td>Payment Method:</td>
+                            <td>
+                                <input type="radio" id="payCash" name="payment" value="Cash on Delivery" checked>
+                                <label for="payCash">Cash on Delivery</label>
+                                <input type="radio" id="payBkash" name="payment" value="bKash">
+                                <label for="payBkash">bKash</label>
+                                <input type="radio" id="payCard" name="payment" value="Card">
+                                <label for="payCard">Card</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="deliveryDate">Delivery Date:</label></td>
+                            <td><input type="date" id="deliveryDate" name="deliveryDate"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="result">Result:</label></td>
+                            <td>
+                                <select id="result" name="result">
+                                    <option value="">Select Result</option>
+                                    <option value="Delivered">Delivered</option>
+                                    <option value="Failed">Failed</option>
+                                    <option value="Returned">Returned</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="remarks">Remarks:</label></td>
+                            <td><textarea id="remarks" name="remarks" rows="3" cols="30"
+                                    placeholder="Required if Failed or Returned"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="submit" id="recordSaveBtn" value="Save Record">
+                                <input type="reset">
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </form>
+
+            <h3>Delivery Record List</h3>
+            <p>
+                <label for="recordSearch">Search:</label>
+                <input type="text" id="recordSearch" placeholder="Order ID, area, payment, result or date"
+                    onkeyup="renderRecords()">
+            </p>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Order ID</th>
+                        <th>Area</th>
+                        <th>Distance (km)</th>
+                        <th>Payment</th>
+                        <th>Date</th>
+                        <th>Result</th>
+                        <th>Remarks</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="recordBody"></tbody>
+            </table>
+            <p id="recordMessage"></p>
+        </section>
+
+        <!-- ========== 2. ASSIGNED DELIVERIES (Unique Feature 1) ========== -->
+        <section class="section" id="assigned">
+            <h2>Assigned Deliveries</h2>
+            <p>Accept or reject a new order, then move it step by step until it is delivered.</p>
+
+            <form id="assignForm" onsubmit="return updateDelivery()">
+                <fieldset>
+                    <legend>Update Delivery</legend>
+                    <table>
+                        <tr>
+                            <td><label for="assignOrder">Order:</label></td>
+                            <td>
+                                <select id="assignOrder" name="assignOrder">
+                                    <option value="">Select Order</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="assignAction">Action:</label></td>
+                            <td>
+                                <select id="assignAction" name="assignAction">
+                                    <option value="">Select Action</option>
+                                    <option value="Accept">Accept</option>
+                                    <option value="Reject">Reject</option>
+                                    <option value="Pick Up">Pick Up</option>
+                                    <option value="Start Delivery">Start Delivery</option>
+                                    <option value="Complete">Complete</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="rejectReason">Reason (for Reject):</label></td>
+                            <td><textarea id="rejectReason" name="rejectReason" rows="2" cols="30"
+                                    placeholder="Why are you rejecting this order?"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="submit" value="Update">
+                                <input type="reset">
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </form>
+
+            <h3>Delivery List</h3>
+            <p>
+                <label for="assignFilter">Show:</label>
+                <select id="assignFilter" onchange="renderAssigned()">
+                    <option value="All">All</option>
+                    <option value="Assigned">Assigned</option>
+                    <option value="Accepted">Accepted</option>
+                    <option value="Picked Up">Picked Up</option>
+                    <option value="On the Way">On the Way</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+            </p>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Area</th>
+                        <th>Amount (Tk)</th>
+                        <th>Payment</th>
+                        <th>Status</th>
+                        <th>Reason</th>
+                    </tr>
+                </thead>
+                <tbody id="assignBody"></tbody>
+            </table>
+        </section>
+
+        <!-- ========== 3. CASH COLLECTION & SETTLEMENT (Unique Feature 2) ========== -->
+        <section class="section" id="cash">
+            <h2>Cash Collection &amp; Settlement</h2>
+            <p>Cash on Delivery money you collected must be deposited at the restaurant cashier. Cash in hand =
+                collected - deposited.</p>
+
+            <div class="cards">
+                <div class="card">
+                    <h3>COD Collected (Tk)</h3>
+                    <p id="cashCollected">0</p>
+                </div>
+                <div class="card">
+                    <h3>Deposited (Tk)</h3>
+                    <p id="cashDeposited">0</p>
+                </div>
+                <div class="card">
+                    <h3>Cash in Hand (Tk)</h3>
+                    <p id="cashInHand">0</p>
+                </div>
+            </div>
+
+            <form id="cashForm" onsubmit="return saveSettlement()">
+                <fieldset>
+                    <legend>Deposit Cash to Restaurant</legend>
+                    <table>
+                        <tr>
+                            <td><label for="depositAmount">Amount (Tk):</label></td>
+                            <td><input type="num" id="depositAmount" name="depositAmount" min="1" max="100000"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="depositDate">Deposit Date:</label></td>
+                            <td><input type="date" id="depositDate" name="depositDate"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="depositNote">Note:</label></td>
+                            <td><input type="text" id="depositNote" name="depositNote"
+                                    placeholder="Optional, e.g. Given to cashier"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="submit" value="Deposit">
+                                <input type="reset" onclick="clearCashErrors()">
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </form>
+
+            <h3>Cash Collected From (Delivered COD Orders)</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Area</th>
+                        <th>Amount (Tk)</th>
+                    </tr>
+                </thead>
+                <tbody id="cashOrdersBody"></tbody>
+            </table>
+
+            <h3>Deposit History</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Amount (Tk)</th>
+                        <th>Note</th>
+                    </tr>
+                </thead>
+                <tbody id="cashDepositBody"></tbody>
+            </table>
+        </section>
+
+        <!-- ========== 4. EARNINGS CALCULATOR (Unique Feature 3) ========== -->
+        <section class="section" id="earnings">
+            <h2>Earnings Calculator</h2>
+            <p>Base pay is 30 Tk per delivery. Distance pay: Bicycle 6 Tk/km, Motorbike 10 Tk/km. Night bonus 5 Tk and
+                Rain bonus 8 Tk per delivery.</p>
+
+            <form id="earnForm" onsubmit="return calculateEarnings()">
+                <fieldset>
+                    <legend>Calculate Earnings</legend>
+                    <table>
+                        <tr>
+                            <td><label for="earnCount">Number of Deliveries:</label></td>
+                            <td><input type="num" id="earnCount" name="earnCount" min="1" max="100"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="earnDistance">Total Distance (km):</label></td>
+                            <td><input type="num" id="earnDistance" name="earnDistance" min="1" max="500" step="0.1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Vehicle:</td>
+                            <td>
+                                <input type="radio" id="earnBicycle" name="earnVehicle" value="Bicycle">
+                                <label for="earnBicycle">Bicycle</label>
+                                <input type="radio" id="earnMotorbike" name="earnVehicle" value="Motorbike" checked>
+                                <label for="earnMotorbike">Motorbike</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Bonus:</td>
+                            <td>
+                                <input type="checkbox" id="earnNight" name="earnNight" value="night">
+                                <label for="earnNight">Night Delivery</label>
+                                <input type="checkbox" id="earnRain" name="earnRain" value="rain">
+                                <label for="earnRain">Rain</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="earnTip">Tips Received (Tk):</label></td>
+                            <td><input type="num" id="earnTip" name="earnTip" placeholder="Optional"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="submit" value="Calculate">
+                                <input type="reset" onclick="clearEarningsResult()">
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </form>
+
+            <div id="earnResult"></div>
+        </section>
+
+    </main>
+
+    <table class="footer">
+        <tr>
+            <td>&copy; 2026 Restaurant Management System</td>
+        </tr>
+    </table>
+
+    <script src="Js/deliveryman.js"></script>
+</body>
+
+</html>
