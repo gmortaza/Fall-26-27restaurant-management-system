@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chef Orders</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="CSS/chef.css">
 </head>
-
-<body class="chef">
+<body>
     <nav>
-        <a class="logo" href="index.html"><img src="./Image/logo.png" alt="Restaurant Logo"></a>
-        <a href="chef_dashboard.html">Dashboard</a>
-        <a href="chef_orders.html" class="active">Order Queue</a>
+        <a href="index.html"><img src="Image/logo.png" alt="Restaurant Logo"></a>
+        <a href="chef.html">Dashboard</a>
+        <a href="chef-orders.html" class="active">Order Queue</a>
         <a href="chef_stock.html">Food Stock</a>
-        <a href="../login.html" class="logout">Logout</a>
+        <a href="login.html">Logout</a>
     </nav>
 
     <form method="get" class="card">
         <fieldset>
             <legend>Order Queue</legend>
-            <table class="form-table">
+            <table>
                 <tr>
                     <td><label for="status">Order Status:</label></td>
                     <td>
@@ -65,7 +63,7 @@
                 <form method="get">
                     <input type="hidden" name="order_id" value="101">
                     <select name="new_status">
-                        <option>Pending</option>
+                        <option selected>Pending</option>
                         <option>Preparing</option>
                         <option>Ready</option>
                     </select>
@@ -109,15 +107,12 @@
                 </form>
             </td>
         </tr>
-
-        <br> <br>
     </table>
 
     <table class="footer">
-        <tr>
-            <td>2026 Restaurant Management System</td>
-        </tr>
+        <tr><td>&copy; 2026 Restaurant Management System</td></tr>
     </table>
-</body>
 
+    <script src="Js/chef.js"></script>
+</body>
 </html>
