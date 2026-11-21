@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food Stock</title>
     <link rel="stylesheet" href="CSS/chef.css">
 </head>
-
 <body>
     <nav>
         <a href="index.html"><img src="Image/logo.png" alt="Restaurant Logo"></a>
@@ -17,7 +15,7 @@
         <a href="login.html">Logout</a>
     </nav>
 
-    <form method="get" class="card">
+    <form method="get" class="card" onsubmit="return checkStock()" onreset="clearErrors(['food_name', 'stock'])">
         <fieldset>
             <legend>Update Food Stock</legend>
             <table>
@@ -35,7 +33,7 @@
                 </tr>
                 <tr>
                     <td><label for="stock">Stock:</label></td>
-                    <td><input type="number" id="stock" name="stock" required></td>
+                    <td><input type="number" id="stock" name="stock"></td>
                 </tr>
                 <tr>
                     <td>Available:</td>
@@ -56,40 +54,20 @@
         </fieldset>
     </form>
 
-    <table class="data-table card">
-
+    <table class="card">
         <tr>
             <th>Food</th>
             <th>Stock</th>
-
         </tr>
-
-        <tr>
-            <td>Burger</td>
-            <td>20</td>
-        </tr>
-        <tr>
-            <td>Pizza</td>
-            <td>15</td>
-        </tr>
-        <tr>
-            <td>Pasta</td>
-            <td>10</td>
-        </tr>
-        <tr>
-            <td>Soft Drinks</td>
-            <td>5</td>
-        </tr>
-
+        <tr><td>Burger</td><td>20</td></tr>
+        <tr><td>Pizza</td><td>15</td></tr>
+        <tr><td>Pasta</td><td>10</td></tr>
+        <tr><td>Soft Drinks</td><td>5</td></tr>
     </table>
 
     <table class="footer">
-        <tr>
-            <td>copy; 2026 Restaurant Management System</td>
-        </tr>
+        <tr><td>&copy; 2026 Restaurant Management System</td></tr>
     </table>
-
     <script src="Js/chef.js"></script>
 </body>
-
 </html>
