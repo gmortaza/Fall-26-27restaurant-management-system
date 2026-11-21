@@ -80,7 +80,7 @@ function validateLogin() {
       form.action = "index.html";
       break;
     case "Delivery Man":
-      form.action = "index.html";
+      form.action = "deliveryman.html";
       break;
   }
 
