@@ -74,7 +74,7 @@ function validateLogin() {
       form.action = "admin/users.html";
       break;
     case "Customer":
-      form.action = "index.html";
+      form.action = "customer.html";
       break;
     case "chefs":
       form.action = "index.html";
