@@ -178,4 +178,4 @@ function validateForgot() {
 window.addEventListener("load", function () {
   showForm("login");
   checkSignup();
-});
+}); 
