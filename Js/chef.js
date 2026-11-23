@@ -37,7 +37,7 @@ function checkFilter() {
   return true;
 }
 
-// chef_stock.html (Update Food Stock)
+
 function checkStock() {
   let food = document.getElementById("food_name").value;
   let stock = document.getElementById("stock").value;
