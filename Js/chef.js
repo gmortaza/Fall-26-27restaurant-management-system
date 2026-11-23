@@ -18,7 +18,7 @@ function clearErrors(ids) {
   }
 }
 
-// chef.html + chef-orders.html (Filter Orders)
+
 function checkFilter() {
   let status = document.getElementById("status").value;
   let date = document.getElementById("order_date").value;
